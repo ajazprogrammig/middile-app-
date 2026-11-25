@@ -1,0 +1,15 @@
+package com.cmart.billing.controller;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import java.util.Map;
+@RestControllerAdvice
+public class ApiExceptionHandler {
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<Map<String,String>> badRequest(IllegalArgumentException ex) {
+    return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+  }
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<Map<String,String>> serverError(IllegalStateException ex) {
+    return ResponseEntity.status(500).body(Map.of("error", ex.getMessage()));
+  }
+}
